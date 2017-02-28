@@ -1,0 +1,133 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.frogermcs.androiddevmetrics'
+def cfg = rootProject.ext.configuration
+def libs = rootProject.ext.libraries;
+def test = rootProject.ext.testingLibraries;
+android {
+    compileSdkVersion cfg.compileVersion
+    buildToolsVersion cfg.buildToolsVersion
+    defaultConfig {
+        applicationId cfg.package
+        minSdkVersion cfg.minSdk
+        targetSdkVersion cfg.targetSdk
+        versionCode cfg.version_code
+        versionName cfg.version_name
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Build variants based on different environment
+    productFlavors {
+        PROD {
+            applicationId = "com.mcma"
+            buildConfigField 'String', 'API_BASE_URL', '"http://gojek-contacts-app.herokuapp.com"';
+            buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" + System.currentTimeMillis() + "L)"
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            File pAlignApk = output.outputFile;
+            File pAlignVersionApk = new File(
+                    output.outputFile.parent,
+                    output.outputFile.name.replace(".apk", "-${variant.versionName}.apk"))
+            pAlignApk.delete();
+            output.outputFile = pAlignVersionApk;
+        }
+        variant.assemble.doLast {
+            variant.outputs.each { output ->
+                println "aligned " + output.outputFile
+                println "unaligned " + output.packageApplication.outputFile
+                File pNotAlignApk = output.packageApplication.outputFile;
+                if (variant.buildType.zipAlignEnabled && pNotAlignApk.getName().contains("unaligned")) {
+                    println "deleting " + pNotAlignApk.getName()
+                    pNotAlignApk.delete()
+                }
+            }
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Android
+    compile "com.android.support:support-v4:${libs.supportVersion}"
+    compile "com.android.support:design:${libs.supportVersion}"
+    compile "com.android.support:appcompat-v7:${libs.supportVersion}"
+    compile "com.android.support:cardview-v7:${libs.supportVersion}"
+    compile "com.android.support:recyclerview-v7:${libs.supportVersion}"
+    compile "com.android.support:palette-v7:${libs.supportVersion}"
+
+    //okhttp
+    compile "com.squareup.okhttp3:okhttp:${libs.okhttp}"
+    compile "com.squareup.okhttp3:logging-interceptor:${libs.okhttp}"
+    compile "com.squareup.okhttp3:okhttp-urlconnection:${libs.okhttp}"
+
+    //retrofit
+    compile "com.squareup.retrofit2:retrofit:${libs.retrofit}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${libs.retrofit}"
+    compile "com.squareup.retrofit2:converter-gson:${libs.retrofit}"
+    compile "com.squareup.retrofit2:converter-scalars:${libs.retrofit}"
+
+    //dagger
+    compile "com.google.dagger:dagger:${libs.dagger}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+    compile "com.google.dagger:dagger:${libs.google_dagger}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${libs.google_dagger}"
+
+    //butterknife
+    compile "com.jakewharton:butterknife:${libs.butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+
+    //reactivex
+    compile "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
+    compile "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
+    compile "com.github.bumptech.glide:glide:${libs.glide}"
+    compile "com.michaelpardo:activeandroid:${libs.activeandroid}"
+    compile "org.mockito:mockito-core:${test.mockito}"
+    provided "javax.annotation:jsr250-api:${libs.javax_annotation}"
+
+    //android test
+    androidTestCompile "org.mockito:mockito-core:$test.mockito"
+    androidTestCompile "com.google.dagger:dagger:$libs.dagger"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$libs.dagger"
+    androidTestCompile "com.google.dagger:dagger:$libs.google_dagger"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$libs.google_dagger"
+    androidTestProvided "javax.annotation:jsr250-api:$libs.javax_annotation"
+    androidTestCompile "com.squareup.okhttp3:mockwebserver:$libs.okhttp"
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    //test
+    testCompile "junit:junit:$test.junit"
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+
+    //leakcanary
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.android.support:support-v4:25.1.1'
+}

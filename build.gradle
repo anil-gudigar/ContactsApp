@@ -1,0 +1,55 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext {
+    configuration = [
+            package             : "com.mcma",
+            buildToolsVersion   : "25.0.1",
+            compileVersion      : 25,
+            minSdk              : 19,
+            targetSdk           : 25,
+            version_code        : 1,
+            version_name        : "1.0",
+    ]
+    libraries = [
+            supportVersion      : "25.1.1",
+            dagger              : "2.0",
+            google_dagger       : "2.9",
+            rxjava              : "2.0.1",
+            rxandroid           : "2.0.1",
+            retrofit            : "2.1.0",
+            butterknife         : "8.5.1",
+            javax_annotation    : "1.0",
+            glide               : "3.7.0",
+            okhttp              : "3.4.1",
+            activeandroid       : "3.1.0-SNAPSHOT"
+    ]
+    testingLibraries = [
+            junit               : "4.12",
+            mockito             : "2.0.31-beta",
+            espresso            : "2.2.2",
+            espressoRunner      : "0.4.1",
+            espressoRules       : "0.4.1"
+    ]
+}
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.frogermcs.androiddevmetrics:androiddevmetrics-plugin:0.4'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

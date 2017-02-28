@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="obj"
+            type="com.mcma.models.contacts.ContactEntityModel" />
+
+        <variable
+            name="presenter"
+            type="com.mcma.modules.contacts.presenter.ContactPresenterImpl" />
+
+        <variable
+            name="isIndex"
+            type="java.lang.Boolean" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:clickable="true"
+        android:onClick="@{() -> presenter.onItemSelected(obj)}"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/sectionTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.10"
+            android:text="@{isIndex ? obj.first_name.substring(0, 1) : @string/empty}"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorIndex"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.15"
+            app:profile_pic="@{obj.profile_pic}" />
+
+        <TextView
+            android:id="@+id/itemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|right"
+            android:layout_marginLeft="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_weight="0.70"
+            android:text="@{String.format(@string/contact_name, obj.first_name,obj.last_name)}"
+            android:textAppearance="?android:attr/textAppearanceListItem" />
+
+    </LinearLayout>
+</layout>

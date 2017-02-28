@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Contact Book</string>
+    <string name="action_settings">Person</string>
+    <string name="contact_name">%1$s&#160;%2$s</string>
+    <string name="contact_count">Displaying &#160;%1$s&#160;Contacts</string>
+    <string name="empty">&#160;</string>
+    <string name="title_activity_new_contact">Add Contact</string>
+    <string name="home">Home</string>
+    <string name="save">Save</string>
+    <string name="email_address">Email Address</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="no_contact_found">No Contact found</string>
+    <string name="retry">Retry</string>
+    <string name="sharing">Sharing via</string>
+    <string name="user_added"> User successfully added</string>
+    <string name="text">Text</string>
+    <string name="vcard_file_vcf">vCard file(VCF)</string>
+</resources>
