@@ -1,4 +1,4 @@
-package com.mcma.app;
+package com.mcma.app.base;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;

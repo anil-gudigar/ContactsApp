@@ -22,16 +22,15 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.activeandroid.content.ContentProvider;
 import com.mcma.HomeActivity;
 import com.mcma.R;
-import com.mcma.app.BaseFragment;
+import com.mcma.app.base.BaseFragment;
 import com.mcma.app.constants.AppConstants;
 import com.mcma.models.contacts.ContactEntityModel;
 import com.mcma.modules.contacts.adapters.ContactBookSectionAdapter;
-import com.mcma.provider.ContactContract;
+import com.mcma.database.ContactContract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

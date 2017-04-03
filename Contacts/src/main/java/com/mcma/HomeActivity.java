@@ -1,7 +1,6 @@
 package com.mcma;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -18,7 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mcma.app.BaseActivity;
+import com.mcma.app.base.BaseActivity;
 import com.mcma.app.MCMAContactsBookApplication;
 import com.mcma.app.constants.AppConstants;
 import com.mcma.models.contacts.ContactEntityModel;
@@ -30,7 +29,6 @@ import com.mcma.modules.contacts.presenter.ContactsPresenterView;
 import com.mcma.utils.GenericUtilities;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.List;
 

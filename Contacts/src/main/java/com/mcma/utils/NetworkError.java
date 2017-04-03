@@ -3,7 +3,7 @@ package com.mcma.utils;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.mcma.app.CustomResponse;
+import com.mcma.app.custom.CustomResponse;
 
 import java.io.IOException;
 import java.util.List;

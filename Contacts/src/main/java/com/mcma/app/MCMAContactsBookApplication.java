@@ -5,7 +5,7 @@ import android.app.Application;
 import com.activeandroid.ActiveAndroid;
 import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
 import com.mcma.BuildConfig;
-import com.mcma.api.manager.RetrofitManager;
+import com.mcma.network.manager.RetrofitManager;
 import com.mcma.app.dagger.AppModule;
 import com.mcma.app.dagger.DaggerNetComponent;
 import com.mcma.app.dagger.NetComponent;

@@ -3,7 +3,7 @@ package com.mcma.modules.contacts.presenter;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.mcma.api.client.APIRequestClient;
+import com.mcma.network.client.APIRequestClient;
 import com.mcma.app.constants.AppConstants;
 import com.mcma.callbacks.CreateContactCallback;
 import com.mcma.callbacks.GetContactCallback;
@@ -16,10 +16,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by anil on 2/6/2017.
@@ -27,7 +27,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class ContactPresenterImpl implements ContactPresenter<ContactsPresenterView> {
     private ContactsPresenterView mView = null;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposable;
     private APIRequestClient apiRequestClient;
 
     @Inject
@@ -38,7 +38,7 @@ public class ContactPresenterImpl implements ContactPresenter<ContactsPresenterV
     @Override
     public void attachedView(ContactsPresenterView contactsPresenterView, boolean loadContactFromServer) {
         mView = contactsPresenterView;
-        this.subscriptions = new CompositeSubscription();
+        this.compositeDisposable = new CompositeDisposable();
         if (loadContactFromServer) {
             getContactList();
         }
@@ -128,7 +128,7 @@ public class ContactPresenterImpl implements ContactPresenter<ContactsPresenterV
 
     public void getContactList() {
         mView.showProgress();
-        Subscription subscription = apiRequestClient.requestContactList(new GetContactListCallback() {
+        Disposable disposable = apiRequestClient.requestContactList(new GetContactListCallback() {
             @Override
             public void onSuccess(List<ContactEntityModel> contactEntities) {
                 Log.i(AppConstants.APP_TAG, "OnSucess :" + contactEntities.size());
@@ -141,12 +141,12 @@ public class ContactPresenterImpl implements ContactPresenter<ContactsPresenterV
                 mView.onFailure(networkError.getAppErrorMessage());
             }
         });
-        subscriptions.add(subscription);
+        compositeDisposable.add(disposable);
     }
 
     public void getContact(String id) {
         mView.showProgress();
-        Subscription subscription = apiRequestClient.requestContact(id, new GetContactCallback() {
+        Disposable disposable = apiRequestClient.requestContact(id, new GetContactCallback() {
             @Override
             public void onSuccess(ContactEntityModel contactEntity) {
                 mView.onContactSuccess(contactEntity);
@@ -157,12 +157,12 @@ public class ContactPresenterImpl implements ContactPresenter<ContactsPresenterV
                 mView.onFailure(networkError.getAppErrorMessage());
             }
         });
-        subscriptions.add(subscription);
+        compositeDisposable.add(disposable);
     }
 
     public void createContact(final ContactEntityModel contactEntityModel) {
         mView.showProgress();
-        Subscription subscription = apiRequestClient.createContact(contactEntityModel, new CreateContactCallback() {
+        Disposable disposable = apiRequestClient.createContact(contactEntityModel, new CreateContactCallback() {
             @Override
             public void onSuccess(Response<ResponseBody> response) {
                 mView.onCreateContactSuccess(response);
@@ -173,12 +173,12 @@ public class ContactPresenterImpl implements ContactPresenter<ContactsPresenterV
                 mView.onFailure(networkError.getAppErrorMessage());
             }
         });
-        subscriptions.add(subscription);
+        compositeDisposable.add(disposable);
     }
 
     public void updateContact(final ContactEntityModel contactEntityModel) {
         mView.showProgress();
-        Subscription subscription = apiRequestClient.updateContact(contactEntityModel, new UpdateContactCallback() {
+        Disposable disposable = apiRequestClient.updateContact(contactEntityModel, new UpdateContactCallback() {
             @Override
             public void onSuccess(Response<ResponseBody> response) {
                 contactEntityModel.save();
@@ -190,11 +190,12 @@ public class ContactPresenterImpl implements ContactPresenter<ContactsPresenterV
                 mView.onFailure(networkError.getAppErrorMessage());
             }
         });
-        subscriptions.add(subscription);
+        compositeDisposable.add(disposable);
     }
 
     public void onStop() {
-        subscriptions.unsubscribe();
+        compositeDisposable.clear();
+        compositeDisposable.dispose();
     }
 
     public boolean isValidFirstname(String firstname) {

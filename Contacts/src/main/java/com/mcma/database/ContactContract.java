@@ -1,4 +1,4 @@
-package com.mcma.provider;
+package com.mcma.database;
 
 import android.provider.BaseColumns;
 

@@ -1,7 +1,7 @@
 package com.mcma.dagger;
 
-import com.mcma.api.client.APIRequestClient;
-import com.mcma.api.interfaces.APIRequestInterface;
+import com.mcma.network.client.APIRequestClient;
+import com.mcma.network.repository.ContactDataRepository;
 
 import org.mockito.Mockito;
 
@@ -13,7 +13,7 @@ import dagger.Module;
 @Module
 public class TestModule {
 
-    public APIRequestClient providesAPIRequestClient(APIRequestInterface apiRequestInterface) {
+    public APIRequestClient providesAPIRequestClient(ContactDataRepository contactDataRepository) {
         return  Mockito.mock(APIRequestClient.class);
     }
 

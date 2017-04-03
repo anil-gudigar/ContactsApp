@@ -1,16 +1,14 @@
 package com.mcma.test;
 
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.mcma.*;
 import com.mcma.R;
-import com.mcma.api.client.APIRequestClient;
-import com.mcma.api.manager.RetrofitManager;
+import com.mcma.network.client.APIRequestClient;
+import com.mcma.network.manager.RetrofitManager;
 import com.mcma.app.constants.AppConstants;
-import com.mcma.app.dagger.NetComponent;
 import com.mcma.callbacks.GetContactListCallback;
 import com.mcma.dagger.DaggerTestComponent;
 import com.mcma.dagger.TestComponent;
@@ -30,7 +28,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.subscribers.TestSubscriber;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;

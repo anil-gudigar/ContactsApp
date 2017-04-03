@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.mcma.BR;
 import com.mcma.HomeActivity;
 import com.mcma.R;
-import com.mcma.app.BaseFragment;
+import com.mcma.app.base.BaseFragment;
 import com.mcma.models.contacts.ContactEntityModel;
 
 import butterknife.BindView;

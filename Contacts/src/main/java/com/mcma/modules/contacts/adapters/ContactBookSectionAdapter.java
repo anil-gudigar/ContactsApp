@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.mcma.app.BaseViewHolder;
+import com.mcma.app.base.BaseViewHolder;
 import com.mcma.app.constants.AppConstants;
 import com.mcma.models.contacts.ContactEntityModel;
 import com.mcma.modules.contacts.presenter.ContactPresenterImpl;

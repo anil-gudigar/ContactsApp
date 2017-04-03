@@ -1,4 +1,4 @@
-package com.mcma.app;
+package com.mcma.app.custom;
 
 import com.google.gson.annotations.SerializedName;
 

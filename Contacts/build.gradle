@@ -87,6 +87,7 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava:${libs.retrofit}"
     compile "com.squareup.retrofit2:converter-gson:${libs.retrofit}"
     compile "com.squareup.retrofit2:converter-scalars:${libs.retrofit}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${libs.retrofit_adapter}"
 
     //dagger
     compile "com.google.dagger:dagger:${libs.dagger}"
@@ -101,6 +102,7 @@ dependencies {
     //reactivex
     compile "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
     compile "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
+
     compile "com.github.bumptech.glide:glide:${libs.glide}"
     compile "com.michaelpardo:activeandroid:${libs.activeandroid}"
     compile "org.mockito:mockito-core:${test.mockito}"
@@ -113,7 +115,9 @@ dependencies {
     androidTestCompile "com.google.dagger:dagger:$libs.google_dagger"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$libs.google_dagger"
     androidTestProvided "javax.annotation:jsr250-api:$libs.javax_annotation"
-    androidTestCompile "com.squareup.okhttp3:mockwebserver:$libs.okhttp"
+    androidTestCompile ("com.squareup.okhttp3:mockwebserver:$libs.okhttp",{
+        exclude module:'okhttp'
+    })
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

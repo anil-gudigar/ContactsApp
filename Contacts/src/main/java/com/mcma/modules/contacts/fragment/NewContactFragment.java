@@ -22,10 +22,9 @@ import android.widget.Toast;
 import com.mcma.BR;
 import com.mcma.HomeActivity;
 import com.mcma.R;
-import com.mcma.app.BaseFragment;
+import com.mcma.app.base.BaseFragment;
 import com.mcma.app.constants.AppConstants;
 import com.mcma.models.contacts.ContactEntityModel;
-import com.mcma.utils.NetworkError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

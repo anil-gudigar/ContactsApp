@@ -1,16 +1,20 @@
-package com.mcma.app;
+package com.mcma.app.base;
 
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 
+import com.mcma.app.Task;
 import com.mcma.callbacks.ITask;
 import com.mcma.utils.GenericUtilities;
 
 /**
- * Created by anil on 2/8/2017.
+ * Created by Anil on 2/14/2017.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements ITask {
-
+public abstract class BaseFragment extends Fragment implements ITask {
+    @Override
+    public int backgroundJob(Object data, int event) {
+        return 0;
+    }
 
     protected void executeTask(Object data, int event) {
         try {
@@ -22,18 +26,13 @@ public abstract class BaseActivity extends AppCompatActivity implements ITask {
     }
 
     @Override
-    public int backgroundJob(Object data, int event) {
-        return 0;
-    }
-
-    @Override
     public void onTaskStarted(int event) {
 
     }
 
     @Override
     public void onTaskFinished(int event, int result) {
-        updateUi(null, event);
+
     }
 
     @Override
@@ -45,20 +44,26 @@ public abstract class BaseActivity extends AppCompatActivity implements ITask {
 
     public void updateUi(final Object data, final int event) {
         try {
-            this.runOnUiThread(new Runnable() {
+            if (null != getActivity()) {
+                getActivity().runOnUiThread(new Runnable() {
 
-                @Override
-                public void run() {
-                    try {
-                        update(data, event);
-                    } catch (Exception e) {
-                        GenericUtilities.handleException(e);
+                    @Override
+                    public void run() {
+                        try {
+                            update(data, event);
+                        } catch (Exception e) {
+                            GenericUtilities.handleException(e);
+                        }
                     }
-                }
-            });
+                });
+            }
         } catch (Exception e) {
             GenericUtilities.handleException(e);
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

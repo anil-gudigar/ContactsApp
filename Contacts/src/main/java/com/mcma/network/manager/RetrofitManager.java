@@ -1,9 +1,9 @@
-package com.mcma.api.manager;
+package com.mcma.network.manager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mcma.api.client.APIRequestClient;
-import com.mcma.api.interfaces.APIRequestInterface;
+import com.mcma.network.client.APIRequestClient;
+import com.mcma.network.repository.ContactDataRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,11 +11,10 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -39,13 +38,13 @@ public class RetrofitManager {
      */
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, ScalarsConverterFactory scalarsConverterFactory, RxJavaCallAdapterFactory rxJavaCallAdapterFactory, OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(Gson gson, ScalarsConverterFactory scalarsConverterFactory, RxJava2CallAdapterFactory rxJava2CallAdapterFactory, OkHttpClient okHttpClient) {
         Retrofit mServiceRetrofit = new Retrofit.Builder()
                 .baseUrl(mBaseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addConverterFactory(scalarsConverterFactory)
-                .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                .addCallAdapterFactory(rxJava2CallAdapterFactory)
                 .build();
 
         return mServiceRetrofit;
@@ -64,10 +63,11 @@ public class RetrofitManager {
         return ScalarsConverterFactory.create();
     }
 
+
     @Provides
     @Singleton
-    RxJavaCallAdapterFactory provideRxJavaCallAdapter() {
-        return RxJavaCallAdapterFactory.create();
+    RxJava2CallAdapterFactory provideRxJava2CallAdapter() {
+        return RxJava2CallAdapterFactory.create();
     }
 
     @Provides
@@ -100,14 +100,14 @@ public class RetrofitManager {
 
     @Provides
     @Singleton
-    public APIRequestInterface providesAPIRequestInterface(Retrofit retrofit) {
-        return retrofit.create(APIRequestInterface.class);
+    public ContactDataRepository providesAPIRequestInterface(Retrofit retrofit) {
+        return retrofit.create(ContactDataRepository.class);
     }
 
     @Provides
     @Singleton
     @SuppressWarnings("unused")
-    public APIRequestClient providesAPIRequestClient(APIRequestInterface apiRequestInterface) {
-        return new APIRequestClient(apiRequestInterface);
+    public APIRequestClient providesAPIRequestClient(ContactDataRepository contactDataRepository) {
+        return new APIRequestClient(contactDataRepository);
     }
 }

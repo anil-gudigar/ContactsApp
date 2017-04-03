@@ -10,8 +10,8 @@ import android.util.Log;
 
 import com.mcma.*;
 import com.mcma.R;
-import com.mcma.api.client.APIRequestClient;
-import com.mcma.api.manager.RetrofitManager;
+import com.mcma.network.client.APIRequestClient;
+import com.mcma.network.manager.RetrofitManager;
 import com.mcma.app.constants.AppConstants;
 import com.mcma.callbacks.GetContactListCallback;
 import com.mcma.dagger.DaggerTestComponent;

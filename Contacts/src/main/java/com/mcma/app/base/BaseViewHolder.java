@@ -1,4 +1,4 @@
-package com.mcma.app;
+package com.mcma.app.base;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;

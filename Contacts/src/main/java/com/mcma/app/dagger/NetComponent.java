@@ -1,8 +1,7 @@
 package com.mcma.app.dagger;
 
 import com.mcma.HomeActivity;
-import com.mcma.api.client.APIRequestClient;
-import com.mcma.api.manager.RetrofitManager;
+import com.mcma.network.manager.RetrofitManager;
 import com.mcma.modules.contacts.fragment.ContactDetailFragment;
 import com.mcma.modules.contacts.fragment.ContactListFragment;
 import com.mcma.modules.contacts.fragment.NewContactFragment;

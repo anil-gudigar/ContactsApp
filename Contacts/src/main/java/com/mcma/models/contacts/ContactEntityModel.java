@@ -3,17 +3,13 @@ package com.mcma.models.contacts;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.Editable;
-import android.text.TextWatcher;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.mcma.provider.ContactContract;
-
-import java.util.Objects;
+import com.mcma.database.ContactContract;
 
 /**
  * Created by anil on 2/8/2017.

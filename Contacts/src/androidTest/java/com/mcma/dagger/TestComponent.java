@@ -1,6 +1,6 @@
 package com.mcma.dagger;
 
-import com.mcma.api.manager.RetrofitManager;
+import com.mcma.network.manager.RetrofitManager;
 import com.mcma.test.ContactCreateInstrumentedTest;
 import com.mcma.test.ContactDetailsInstrumentedTest;
 import com.mcma.test.ContactListInstrumentedTest;
