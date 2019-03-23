@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''sudo ./gradlew clean
-sudo ./gradlew assembleDebug'''
+        sh '''./gradlew clean
+./gradlew assembleDebug'''
       }
     }
     stage('Test') {
