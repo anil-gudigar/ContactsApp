@@ -7,5 +7,10 @@ pipeline {
 sudo ./gradlew assembleDebug'''
       }
     }
+    stage('Test') {
+      steps {
+        sh './gradlew testDebugUnitTest'
+      }
+    }
   }
 }
