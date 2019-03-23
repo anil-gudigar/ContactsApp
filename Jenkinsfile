@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Compile') {
       steps {
-        sh './gradlew compileDebugSources'
+        sh './gradlew assembleDebug'
       }
     }
     stage('Unit test') {
